@@ -16,7 +16,7 @@ client = OpenAI(
 app = Flask(__name__)
 
 BASE_URL = "https://backend.vaulta.digital/api/v1"
-COMMERCE_BASE_URL = "https://12a0e83d6cbb.ngrok-free.app"
+COMMERCE_BASE_URL = os.getenv('COMMERCE_BASE_URL')
 VAULTA_API_KEY = os.getenv("VAULTA_API_KEY")
 COMMERCE_API_KEY = os.getenv("COMMERCE_API_KEY")
 
