@@ -1,9 +1,14 @@
+import os
 import requests
 from openai import OpenAI
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 client = OpenAI(
   base_url="https://openrouter.ai/api/v1",
-  api_key="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",
+  api_key=os.getenv("OPENROUTER_API_KEY"),
 )
 
 completion = client.chat.completions.create(
@@ -49,13 +54,13 @@ else:
 
 
 # Replace with your actual API key from the Vaulta Dashboard
-API_KEY = "SLItYCvd9M1gTtfY_5Aafo4kQN4njn_tC9vw8KOoCTI"
+VAULTA_API_KEY = os.getenv("VAULTA_API_KEY")
 
 # Endpoint to create a quote
 quotes_url = f"{BASE_URL}/get_quote"
 
 headers = {
-    "x-api-key": API_KEY,
+    "x-api-key": VAULTA_API_KEY,
     "Content-Type": "application/json"
 }
 

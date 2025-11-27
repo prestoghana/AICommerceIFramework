@@ -1,19 +1,24 @@
+import os
 from pprint import pprint
 
 import requests
 from flask import Flask, request
 from openai import OpenAI
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 client = OpenAI(
     base_url="https://openrouter.ai/api/v1",
-    api_key="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",
+    api_key=os.getenv("OPENROUTER_API_KEY"),
 )
 app = Flask(__name__)
 
 BASE_URL = "https://backend.vaulta.digital/api/v1"
 COMMERCE_BASE_URL = "https://12a0e83d6cbb.ngrok-free.app"
-API_KEY = "SLItYCvd9M1gTtfY_5Aafo4kQN4njn_tC9vw8KOoCTI"
-VAULTA_API_KEY = "SLItYCvd9M1gTtfY_5Aafo4kQN4njn_tC9vw8KOoCTI"
+VAULTA_API_KEY = os.getenv("VAULTA_API_KEY")
+COMMERCE_API_KEY = os.getenv("COMMERCE_API_KEY")
 
 ai_persona = """ 
 You are Presto Assistant — the digital owner and manager of an online shop.
@@ -111,7 +116,7 @@ chat_append_message("system", content=ai_persona)
 def get_product_details_by_description(query: str):
     product_url = f"{COMMERCE_BASE_URL}/products/{query}"
     headers = {
-        "x-api-key": API_KEY,
+        "x-api-key": COMMERCE_API_KEY,
         "Content-Type": "application/json"
     }
 
@@ -129,7 +134,7 @@ def get_product_details_by_description(query: str):
 def get_all_products():
     products_url = f"{COMMERCE_BASE_URL}/products"
     headers = {
-        "x-api-key": API_KEY,
+        "x-api-key": COMMERCE_API_KEY,
         "Content-Type": "application/json"
     }
 
@@ -165,7 +170,7 @@ def send_to_ai(incoming_message: str):
 def get_rate():
     quotes_url = f"{BASE_URL}/get_quote"
     headers = {
-        "x-api-key": API_KEY,
+        "x-api-key": VAULTA_API_KEY,
         "Content-Type": "application/json"
     }
 
